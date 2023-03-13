@@ -1,5 +1,6 @@
 <template>
 	<navar></navar>
+	<search_nav></search_nav>
 	
 	<router-view />
 </template>
@@ -7,6 +8,7 @@
 <script>
 	import {mapState} from 'vuex'
 	import navar from '@/components/navar.vue'
+	import search_nav from '@/components/search_nav.vue'
 	
 	
 	export default {
@@ -19,7 +21,8 @@
 			}
 		},
 		components : {
-			navar : navar
+			navar : navar,
+			search_nav
 		}
 	}
 </script>
@@ -543,6 +546,10 @@
 	.border-right-dark{
 		border-right: 1px solid #ccc;
 	}
+	
+	.border-right-none{
+		border-right: 0px;
+	}
 
 	.rounded {
 		border-radius: 0.25rem;
@@ -631,6 +638,11 @@
 	.w-66 {
 		width: 66%;
 	}
+	
+	.w-70 {
+		width: 70%;
+	}
+	
 
 	.w-72 {
 		width: 72%;
@@ -770,6 +782,10 @@
 	.text-secondary {
 		color: #666;
 	}
+	
+	.text-lighter{
+		font-weight: lighter;
+	}
 
 	.text-muted {
 		color: #999;
@@ -842,6 +858,10 @@
 	/*  内容溢出  */
 	.overflow-hidden {
 		overflow: hidden;
+	}
+	
+	.border-box{
+		box-sizing: border-box;
 	}
 	
 </style>
