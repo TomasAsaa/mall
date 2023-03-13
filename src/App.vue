@@ -1,6 +1,7 @@
 <template>
 	<navar></navar>
 	<search_nav></search_nav>
+	<foot></foot>
 	
 	<router-view />
 </template>
@@ -9,6 +10,7 @@
 	import {mapState} from 'vuex'
 	import navar from '@/components/navar.vue'
 	import search_nav from '@/components/search_nav.vue'
+	import foot from '@/components/foot.vue'
 	
 	
 	export default {
@@ -22,7 +24,8 @@
 		},
 		components : {
 			navar : navar,
-			search_nav
+			search_nav,
+			foot
 		}
 	}
 </script>
@@ -772,6 +775,10 @@
 
 	.bg-grey {
 		background-color: #ddd;
+	}
+	
+	.bg-dark{
+		background-color: #444;
 	}
 
 	/*  字体颜色  */
