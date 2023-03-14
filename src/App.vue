@@ -1,9 +1,11 @@
 <template>
 	<navar></navar>
-	<search_nav></search_nav>
+	<search_nav></search_nav>	
+	<router-view />
+	
 	<foot></foot>
 	
-	<router-view />
+	
 </template>
 
 <script>
@@ -678,6 +680,11 @@
 	.w-100 {
 		width: 100%;
 	}
+	
+	.w-min-792{
+		min-width: 792px;
+	}
+	
 
 	.box-sizing-border {
 		box-sizing: border-box;

@@ -6,7 +6,7 @@
 		<div class="w-72 d-flex flex-column align-items-center">
 			<div class="d-flex" style="min-width: 72%;">
 				<input type="text" class="w-50 border-right-none rounded-left outline-none border-red px-3 py-2" placeholder="啦啦啦啦啦">
-				<button class="px-3 py-2 bg-red text-white border-0 rounded-right mr-3">搜索</button>
+				<button class="px-3 py-2 bg-red text-white border-0 rounded-right mr-3 hand">搜索</button>
 				<router-link to="/cart" class="text-decoration-none border-gray px-5 py-1 rounded text-red">我的购物车</router-link>
 			</div>
 			<div class="mt-2 d-flex text-xs text-secondary">
