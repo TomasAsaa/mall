@@ -12,13 +12,13 @@
 						v-for="level2 of level1.children" :key="level2.cate_id + level2.cate_name">
 							<div class="mr-3 my-2 d-flex w-10 text-hover-red">{{level2.cate_name}}</div>
 							<div class="d-flex flex-wrap w-90">
-								<div class="mx-1 my-2 text-hover-red"
-								v-for="level3 of level2.children" :key="level3.cate_id + level3.cate_name">{{level3.cate_name}}</div>
+								<router-link to="/attrlist" class="mx-1 my-2 text-hover-red text-decoration-none text-secondary"
+								v-for="level3 of level2.children" :key="level3.cate_id + level3.cate_name"
+								@click="level3_click(level3)">{{level3.cate_name}}</router-link>
 							</div>
 						</div>
 					</div>
-				</div>
-				
+				</div>				
 			</div>			
 		</div>
 		<div class="w-66 ml-1 overflow-hidden position-relative mr-2">
@@ -68,7 +68,8 @@
 				'getCategoryList' : 'commodity/get_category_list'
 			}),
 			...mapMutations({
-				'level1_hover' : 'commodity/level1_hover'
+				'level1_hover' : 'commodity/level1_hover',
+				'level3_click' : 'commodity/level3_click'
 			}),		
 			carousel_clicked(x){
 				this.website.carousel_index = x
