@@ -1,5 +1,5 @@
 <template>
-	<div class="container box-shadow rounded py-2 px-4">
+	<div class="container box-shadow rounded py-2 px-4 border-box">
 		<div class="d-flex text-muted mt-2"
 		v-for="(attr,index) of commodity.attr_list" :key="'attr' + attr.key_id">
 			<div class="text-right w-15 mx-2 p-1">{{attr.key_name}}</div>
@@ -13,15 +13,21 @@
 			</div>			
 		</div>
 	</div>
+	
+	<div class="container">		
+		<spulist :list = 'commodity.spu_list'></spulist>
+	</div>
 </template>
 
 <script>
 	import {mapActions,mapState,mapMutations} from 'vuex'
+	import spulist from '@/components/spulist.vue'
 	
 	export default{
 		methods: {
 			...mapActions({
 				'get_Attr_List' : 'commodity/get_Attr_List',
+				'get_Spu_List' : 'commodity/get_Spu_List',
 				
 			}),
 			
@@ -34,6 +40,10 @@
 		},
 		mounted() {
 			this.get_Attr_List()
+			this.get_Spu_List()
+		},
+		components : {
+			spulist : spulist
 		}
 	}
 </script>
