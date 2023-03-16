@@ -32,7 +32,8 @@
 			}),
 			
 			...mapMutations({
-				'attr_click' : 'commodity/attr_click'
+				'attr_click' : 'commodity/attr_click',
+				
 			})
 		},
 		computed: {
