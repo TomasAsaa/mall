@@ -1,8 +1,19 @@
 <template>
 	<div class="container box-shadow rounded py-2 px-4 border-box">
+		<div class="d-flex mt-2 text-muted" v-if="commodity.selected_level3 == undefined"><!-- 此处v-if有bug -->
+			<div class="text-right w-15 mx-2 p-1">分类：</div>
+			<div class="mx-2 p-1 w-7 hand" 
+			@click="level3_click()" :class="{'text-red' : commodity.selected_level3 == undefined}"
+			>全部分类</div>
+			<div class="mx-2 p-1 hand"
+			v-for="cate of commodity.category_list" :key="cate.cate_name+  cate.cate_id"
+			@click="level3_click(cate)" :class="{'text-red' : commodity.selected_level3 == cate}">{{cate.cate_name}}</div>						
+		</div>
+		
+		
 		<div class="d-flex text-muted mt-2"
 		v-for="(attr,index) of commodity.attr_list" :key="'attr' + attr.key_id">
-			<div class="text-right w-15 mx-2 p-1">{{attr.key_name}}</div>
+			<div class="text-right w-15 mx-2 p-1">{{attr.key_name}}:</div>
 			<div class="mx-2 p-1 w-5 hand" :class="{'text-red' : commodity.selected_attrlist[index] == undefined}"
 			@click="attr_click({'index' : index, 'attr' : undefined})">全部</div>
 			<div class="d-flex flex-wrap">
@@ -33,6 +44,7 @@
 			
 			...mapMutations({
 				'attr_click' : 'commodity/attr_click',
+				'level3_click' : 'commodity/spu_category_click',
 				
 			})
 		},
@@ -41,12 +53,17 @@
 		},
 		mounted() {
 			this.get_Attr_List()
-			this.get_Spu_List()
+			if(this.commodity.selected_level3 != undefined){
+				this.get_Spu_List()
+			}			
 		},
 		components : {
 			spulist : spulist
 		}
 	}
+	
+	
+	
 </script>
 
 <style>

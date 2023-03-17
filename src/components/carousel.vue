@@ -54,10 +54,16 @@
 			<img :src="require('@/assets/' + 'carousel-right01.jpg')" class="w-100">
 		</div>
 	</div>
+	
+	<div class="container mt-5">
+		<div class="box-shadow text-lg text-bolder w-15 rounded-right-lg rounded-left-lg py-2 px-3 text-muted">电视专场</div>
+		<spulist></spulist>
+	</div>
 </template>
 
 <script>
 	import {mapState,mapActions,mapMutations} from 'vuex'
+	import spulist from '@/components/spulist.vue'
 		
 	export default {
 		computed : {
@@ -65,7 +71,8 @@
 		},
 		methods : {
 			...mapActions({
-				'getCategoryList' : 'commodity/get_category_list'
+				'getCategoryList' : 'commodity/get_category_list',
+				'get_special_spulist' : 'commodity/get_special_spulist'
 			}),
 			...mapMutations({
 				'level1_hover' : 'commodity/level1_hover',
@@ -76,7 +83,14 @@
 			}
 		},
 		mounted() {			
-			this.getCategoryList('')			
+			this.getCategoryList('')
+			for(let id of this.commodity.cateid_list){
+				console.log(id)
+				this.get_special_spulist(id)			
+			}			
+		},
+		components :{
+			spulist
 		}
 	}
 </script>

@@ -13,10 +13,15 @@ export default {
 		attr_list: [],
 		selected_attrlist: [],
 		selected_spulist: '',
-		spu_list : [],
+		spu_list: [],
 		start: 0,
 		length: 10,
-		search_keyword: ''
+		search_keyword: '',
+		category_list: [],
+		// 商品专场id
+		cateid_list: [130, 30, 19, 219],
+		// spu专场id
+		special_spulist: []
 	},
 	mutations: {
 		level1_hover(context, payload) {
@@ -30,21 +35,27 @@ export default {
 		attr_click(context, payload) {
 			context.selected_spulist = ''
 			context.selected_attrlist[payload.index] = payload.attr
-			for(let spu_attr of context.selected_attrlist){
-				if(spu_attr != undefined){
+			for (let spu_attr of context.selected_attrlist) {
+				if (spu_attr != undefined) {
 					context.selected_spulist += spu_attr.id + ','
-					
-					
+
+
 				}
 			}
-			context.selected_spulist = context.selected_spulist.substring(0,context.selected_spulist.length-1)
+			context.selected_spulist = context.selected_spulist.substring(0, context.selected_spulist.length - 1)
 			console.log(context.selected_spulist)
 			this.dispatch('commodity/get_Spu_List')
-			
-			
+
+
+		},
+
+		spu_category_click(context, payload) {
+			context.selected_level3 = payload
+			this.dispatch('commodity/get_Spu_List')
+			this.dispatch('commodity/get_Attr_List')
 		}
-		
-						
+
+
 	},
 	actions: {
 		get_category_list(context, payload) {
@@ -55,6 +66,7 @@ export default {
 				})
 				.then(response => {
 					context.state.cate_list = response.data.data
+					
 				})
 		},
 
@@ -62,7 +74,8 @@ export default {
 			console.log(context)
 			console.log(payload)
 			getAttrList({
-				cate_id: context.state.selected_level3 == undefined ? null : context.state.selected_level3.cate_id,
+				cate_id: context.state.selected_level3 == undefined ? null : context.state.selected_level3
+					.cate_id,
 				key_issku: 0,
 				key_ishigh: 0
 			}).then(response => {
@@ -73,14 +86,14 @@ export default {
 					context.state.selected_attrlist.push(undefined)
 				}
 				console.log(context.state.selected_attrlist)
-				
+
 
 			})
 		},
 
 		get_Spu_List(context) {
 			console.log(context)
-			
+
 			getSpuList({
 				spu_name: context.state.search_keyword == '' ? '' : context.state.search_keyword,
 				spu_title: '',
@@ -92,8 +105,31 @@ export default {
 			}).then(response => {
 				context.state.spu_list = response.data.data
 				console.log(context.state.spu_list)
+
+
+				if (context.state.category_list.length == 0) {
+					context.state.category_list = response.data.categoryList
+				}
+				console.log(context.state.category_list)
+			})
+		},
+		get_special_spulist(context, payload){
+			console.log(context)
+			console.log(payload)
+			getSpuList({
+				spu_name: '',
+				spu_title: '',
+				spu_status: 1,
+				cate_id: payload,
+				valueList: '',
+				start: 0,
+				length: 5
+			}).then(response => {
+				console.log(response)
 			})
 		}
+		
 	},
+
 
 }

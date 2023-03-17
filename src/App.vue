@@ -583,6 +583,10 @@
 	.circle {
 		border-radius: 50%;
 	}
+	
+	.circle-right{
+		border-radius: 0rem 50% 0rem 50% 0rem;
+	}
 
 	.w-0 {
 		width: 0%;
