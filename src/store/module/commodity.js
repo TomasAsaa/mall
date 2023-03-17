@@ -15,7 +15,8 @@ export default {
 		selected_spulist: '',
 		spu_list : [],
 		start: 0,
-		length: 10
+		length: 10,
+		search_keyword: ''
 	},
 	mutations: {
 		level1_hover(context, payload) {
@@ -61,7 +62,7 @@ export default {
 			console.log(context)
 			console.log(payload)
 			getAttrList({
-				cate_id: context.state.selected_level3.cate_id,
+				cate_id: context.state.selected_level3 == undefined ? null : context.state.selected_level3.cate_id,
 				key_issku: 0,
 				key_ishigh: 0
 			}).then(response => {
@@ -81,10 +82,10 @@ export default {
 			console.log(context)
 			
 			getSpuList({
-				spu_name: '',
+				spu_name: context.state.search_keyword == '' ? '' : context.state.search_keyword,
 				spu_title: '',
 				spu_status: 1,
-				cate_id: context.state.selected_level3.cate_id,
+				cate_id: context.state.selected_level3 == undefined ? null : context.state.selected_level3.cate_id,
 				valueList: context.state.selected_spulist,
 				start: context.state.start,
 				length: context.state.length
