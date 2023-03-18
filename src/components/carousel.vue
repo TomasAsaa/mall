@@ -55,9 +55,9 @@
 		</div>
 	</div>
 	
-	<div class="container mt-5">
-		<div class="box-shadow text-lg text-bolder w-15 rounded-right-lg rounded-left-lg py-2 px-3 text-muted">电视专场</div>
-		<spulist></spulist>
+	<div class="container mt-5" v-for="spulist of commodity.special_spulist" :key="spulist.categoryList[0].cate_id">
+		<div class="box-shadow text-lg text-bolder w-15 rounded-right-lg rounded-left-lg py-2 px-3 text-muted">{{spulist.categoryList[0].cate_name}}</div>
+		<spulist :list ='spulist.data'></spulist>
 	</div>
 </template>
 
@@ -84,10 +84,10 @@
 		},
 		mounted() {			
 			this.getCategoryList('')
-			for(let id of this.commodity.cateid_list){
-				console.log(id)
-				this.get_special_spulist(id)			
-			}			
+			
+				
+			this.get_special_spulist()			
+						
 		},
 		components :{
 			spulist

@@ -9,7 +9,7 @@
 				:title="img.value_images[0]">
 								
 		</div>
-		<div class="text-bolder text-lg  text-red mt-2">1999</div>
+		<div class="text-bolder text-lg  text-red mt-2">{{spu_minprice}}</div>
 		<div class="text-sm text-secondary mt-2">{{data.spu_name}}</div>
 	</div>
 </template>
@@ -19,19 +19,27 @@
 		props: ['data'],
 		data() {
 			return{
-				selected_img : this.data.attrKeyList[0].attrValueList[0].value_images[0]
+				selected_img : this.data.attrKeyList[0].attrValueList[0].value_images[0],
+				spu_minprice : null
 			}
 		},
 		
 		mounted() {
-			console.log(this.selected_img)
+			let index = 0
+			for(let i =1; i<= this.data.skuList.length-1; i++){
+				if(this.data.skuList[i].sku_price < this.data.skuList[0].sku_price){
+					index = i
+				}								
+			}
+			this.spu_minprice = this.data.skuList[index].sku_price			
 		},
 		
 		methods : {
 			img_click(x){
 				this.selected_img = x
 			}
-		}
+		},
+		
 	}
 </script>
 

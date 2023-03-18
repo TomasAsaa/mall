@@ -19,8 +19,8 @@ export default {
 		search_keyword: '',
 		category_list: [],
 		// 商品专场id
-		cateid_list: [130, 30, 19, 219],
-		// spu专场id
+		cateid_list: [130, 34, 20, 219],
+		// 专场商品数据
 		special_spulist: []
 	},
 	mutations: {
@@ -113,20 +113,26 @@ export default {
 				console.log(context.state.category_list)
 			})
 		},
-		get_special_spulist(context, payload){
-			console.log(context)
-			console.log(payload)
-			getSpuList({
-				spu_name: '',
-				spu_title: '',
-				spu_status: 1,
-				cate_id: payload,
-				valueList: '',
-				start: 0,
-				length: 5
-			}).then(response => {
-				console.log(response)
-			})
+		get_special_spulist(context){
+			for(let i = 0; i<=context.state.cateid_list.length-1; i++){
+				console.log(context)				
+				getSpuList({
+					spu_name: '',
+					spu_title: '',
+					spu_status: 1,
+					cate_id: context.state.cateid_list[i],
+					valueList: '',
+					start: 0,
+					length: 5
+				}).then(response => {
+					context.state.special_spulist[i] = response.data
+					
+				})
+			}
+			console.log(context.state.special_spulist)
+			
+			
+			
 		}
 		
 	},
