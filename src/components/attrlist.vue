@@ -1,6 +1,6 @@
 <template>
 	<div class="container box-shadow rounded py-2 px-4 border-box">
-		<div class="d-flex mt-2 text-muted" v-if="commodity.selected_level3 == undefined"><!-- 此处v-if有bug -->
+		<div class="d-flex mt-2 text-muted" v-if="commodity.search_keyword != ''"><!-- 此处v-if有bug -->
 			<div class="text-right w-15 mx-2 p-1">分类：</div>
 			<div class="mx-2 p-1 w-7 hand" 
 			@click="level3_click()" :class="{'text-red' : commodity.selected_level3 == undefined}"
@@ -45,6 +45,7 @@
 			...mapMutations({
 				'attr_click' : 'commodity/attr_click',
 				'level3_click' : 'commodity/spu_category_click',
+				'next_page' : 'commodity/next_page'
 				
 			})
 		},
@@ -55,7 +56,23 @@
 			this.get_Attr_List()
 			if(this.commodity.selected_level3 != undefined){
 				this.get_Spu_List()
+			}
+						
+			window.onscroll = () =>{
+
+				if(window.innerHeight + document.documentElement.scrollTop >= document.documentElement.scrollHeight){
+					console.log('到底了')
+					this.next_page()
+				}
 			}			
+		},
+		unmounted() {
+			this.commodity.spu_list =[]
+			this.commodity.start = 0
+			this.commodity.selected_level3 = undefined
+			this.commodity.category_list = []
+			this.commodity.search_keyword = ''
+			this.commodity.selected_spulist = ''
 		},
 		components : {
 			spulist : spulist

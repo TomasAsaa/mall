@@ -4,6 +4,8 @@ import {
 } from 'vue-router'
 import carousel from '@/components/carousel.vue'
 import attrlist from '@/components/attrlist.vue'
+import spuInfo from '@/components/spuInfo.vue'
+import register from '@/components/register.vue'
 
 const routes = [{
 		path: '/',
@@ -14,6 +16,16 @@ const routes = [{
 		path: '/attrlist',
 		name: 'attrlist',
 		component: attrlist
+	},
+	{
+		path: '/spuInfo',
+		name: 'spuInfo',
+		component: spuInfo
+	},
+	{
+		path: '/register',
+		name: 'register',
+		component: register
 	}
 ]
 

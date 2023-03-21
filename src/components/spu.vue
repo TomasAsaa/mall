@@ -1,5 +1,6 @@
 <template>
-	<div>
+	<router-link to="/spuInfo" class="box-shadow-hover-red text-decoration-none py-1 px-1 rounded"
+	@click="spu_click(data)">
 		<img :src="'http://localhost:8001/img/' + selected_img" style="width: 200px;">
 		<div class="mt-2">
 			<img v-for="img of data.attrKeyList[0].attrValueList" :key="img.value_id + img.value_name"
@@ -11,11 +12,14 @@
 		</div>
 		<div class="text-bolder text-lg  text-red mt-2">{{spu_minprice}}</div>
 		<div class="text-sm text-secondary mt-2">{{data.spu_name}}</div>
-	</div>
+	</router-link>
 </template>
 
 <script>
+	import {mapMutations} from 'vuex'
 	export default {
+		
+		
 		props: ['data'],
 		data() {
 			return{
@@ -35,9 +39,14 @@
 		},
 		
 		methods : {
+			// 遍历当前spu的所有sku组合,找到最低价
 			img_click(x){
 				this.selected_img = x
-			}
+			},
+			
+			...mapMutations({
+				'spu_click' : 'commodity/spu_click',
+			})
 		},
 		
 	}

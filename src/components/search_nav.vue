@@ -43,7 +43,7 @@
 </template>
 
 <script>
-	import {mapState,mapActions} from 'vuex'
+	import {mapState,mapActions,mapMutations} from 'vuex'
 	
 	export default {
 		
@@ -54,7 +54,12 @@
 		methods:{
 			...mapActions({
 				'get_SpuList' : 'commodity/get_Spu_List'
+			}),
+			
+			...mapMutations({
+				'search_click' : 'commodity/search_click'
 			})
+			
 		}
 	}
 </script>

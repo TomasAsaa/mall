@@ -869,6 +869,10 @@
 		text-decoration: none;
 	}
 	
+	.text-decoration-line-through{
+		text-decoration: line-through;
+	}
+	
 	.text-hover-red:hover{
 		color: #e33;
 	}

@@ -21,7 +21,17 @@ export default {
 		// 商品专场id
 		cateid_list: [130, 34, 20, 219],
 		// 专场商品数据
-		special_spulist: []
+		special_spulist: [],
+		// 选中的商品
+		selected_spu : undefined,
+		// 选中的商品图片颜色索引
+		imglist_index : 0,
+		// 商品sku组合的索引
+		sku_index : 0,
+		// 商品详情页面左边选中的图片
+		selected_img : undefined,
+		// 商品默认选中的sku的组合
+		selected_sku : undefined
 	},
 	mutations: {
 		level1_hover(context, payload) {
@@ -33,6 +43,9 @@ export default {
 		},
 
 		attr_click(context, payload) {
+			context.spu_list = []
+			context.start = 0
+			
 			context.selected_spulist = ''
 			context.selected_attrlist[payload.index] = payload.attr
 			for (let spu_attr of context.selected_attrlist) {
@@ -45,14 +58,54 @@ export default {
 			context.selected_spulist = context.selected_spulist.substring(0, context.selected_spulist.length - 1)
 			console.log(context.selected_spulist)
 			this.dispatch('commodity/get_Spu_List')
-
-
 		},
 
 		spu_category_click(context, payload) {
+			context.spu_list = []
+			context.start = 0
+			
+			context.selected_spulist = ''
 			context.selected_level3 = payload
 			this.dispatch('commodity/get_Spu_List')
 			this.dispatch('commodity/get_Attr_List')
+		},
+		// 下拉滚动事件
+		next_page(context){
+			context.start = context.start + context.length
+			this.dispatch('commodity/get_Spu_List')
+		},
+		// 搜索点击事件(备用)
+		search_click(context){
+			context.spu_list = []
+			context.start = 0
+			context.selected_spulist =''			
+			this.dispatch('commodity/get_Spu_List')
+		},
+		// 商品spu详情点击事件
+		spu_click(context, payload){			
+			context.selected_spu = payload
+			
+			// 点击选中商品的sku字符串转成JSON对象赋值到仓库中的selected_sku
+			context.selected_sku = JSON.parse(context.selected_spu.skuList[context.sku_index].sku_spuattr)
+			console.log(context.selected_sku)
+			// 遍历当前所有颜色,确定哪个颜色是默认选中的
+			for(let i =0; i <= context.selected_spu.attrKeyList[0].attrValueList; i++){
+				if(context.selected_spu.attrKeyList[0].attrValueList[i].value_id ==JSON.parse(this.commodity.selected_spu.skuList[context.sku_index].sku_spuattr)[0].value_id){
+					context.imglist_index = i
+					
+				}
+			}
+								
+		},
+		// 商品详情图片点击事件
+		spuimge_click(context, payload){
+			context.selected_img = payload
+		},
+		
+		// 商品详情页面点击规格属性
+		sku_attr_click(context, payload){
+			console.log(context)
+			console.log(payload)
 		}
 
 
@@ -103,9 +156,10 @@ export default {
 				start: context.state.start,
 				length: context.state.length
 			}).then(response => {
-				context.state.spu_list = response.data.data
-				console.log(context.state.spu_list)
-
+				// context.state.spu_list = response.data.data
+				// console.log(context.state.spu_list)
+				
+				context.state.spu_list = context.state.spu_list.concat(response.data.data)
 
 				if (context.state.category_list.length == 0) {
 					context.state.category_list = response.data.categoryList
