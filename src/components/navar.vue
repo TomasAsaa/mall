@@ -5,9 +5,9 @@
 				<router-link to="/" class="text-sm mr-auto text-decoration-none text-hover-red"
 					:class="{'text-red' : website.nav_index == 0, 'text-secondary' : website.nav_index != 0}"
 					@click="nav_clicked(0)">学掌门商城</router-link>
-				<router-link to="/login" class="text-hover-red  px-2 border-right-dark text-decoration-none"
+				<router-link to="/logon" class="text-hover-red  px-2 border-right-dark text-decoration-none"
 					:class="{'text-red' : website.nav_index == 1, 'text-secondary' : website.nav_index != 1}"
-					@click="nav_clicked(1)">你好，请登录</router-link>
+					@click="nav_clicked(1)">{{customer.user_info == undefined ? '你好，请登录' : customer.user_info.user_name}}</router-link>
 				<router-link to="/register" class="px-2 border-right-dark text-decoration-none text-hover-red"
 					:class="{'text-red' : website.nav_index == 2, 'text-secondary' : website.nav_index != 2}"
 					@click="nav_clicked(2)">免费注册</router-link>
@@ -38,12 +38,16 @@
 	import {mapState} from 'vuex'
 	export default {
 		computed : {
-			...mapState(['website'])
+			...mapState(['website','customer'])
 		},
 		methods : {
 			nav_clicked(x){
 				this.website.nav_index = x
 			}
+		},
+		mounted(){
+			// 刷新挂载时读取缓存
+			this.customer.user_info = JSON.parse(localStorage.getItem('user_info'))
 		}
 	}
 

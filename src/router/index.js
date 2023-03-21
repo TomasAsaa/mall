@@ -6,6 +6,7 @@ import carousel from '@/components/carousel.vue'
 import attrlist from '@/components/attrlist.vue'
 import spuInfo from '@/components/spuInfo.vue'
 import register from '@/components/register.vue'
+import logon from '@/components/logon.vue'
 
 const routes = [{
 		path: '/',
@@ -26,6 +27,11 @@ const routes = [{
 		path: '/register',
 		name: 'register',
 		component: register
+	},
+	{
+		path: '/logon',
+		name: 'logon',
+		component: logon
 	}
 ]
 
