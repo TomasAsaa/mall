@@ -635,6 +635,10 @@
 	.w-40 {
 		width: 40%;
 	}
+	
+	.w-45 {
+		width: 48%;
+	}
 
 	.w-50 {
 		width: 50%;
@@ -771,6 +775,10 @@
 	.bg-red {
 		background-color: #e33;
 	}
+	
+	.bg-green {
+		background-color: green;
+	}
 
 	.bg-white {
 		background-color: #fff;
@@ -844,6 +852,10 @@
 
 	.text-xxl {
 		font-size: 1.75rem;
+	}
+	
+	.text-max {
+		font-size: 3rem;
 	}
 
 	/*  字体水平对齐方式  */

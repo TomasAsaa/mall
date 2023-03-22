@@ -1,7 +1,9 @@
 import {
 	regist,
 	login,
-	getUserInfo
+	getUserInfo,
+	getUserAddress,
+	getChina
 } from '@/data/customer.js'
 
 import router from '@/router'
@@ -15,10 +17,26 @@ export default {
 		user_name : '',
 		username : '', 
 		password : '',
-		user_info : undefined
+		// 用户信息
+		user_info : undefined,
+		// 用户收货地址
+		user_address : [],
+		// 收获列表信息
+		uaddr_name : '',
+		uaddr_phone : '',
+		uaddr_province : '',
+		uaddr_city : '',
+		uaddr_district : '',
+		uaddr_address : '',
+		uaddr_isdefault : 0,
+		// 行政地区列表
+		city_list : []
 	},
 	mutations: {
-		
+		uaddr_provincechange(context){
+			context.uaddr_city = '',
+			context.uaddr_district = ''
+		}
 	},
 	actions: {
 		register(context){
@@ -56,7 +74,7 @@ export default {
 			})			
 			
 		},
-		
+		// 有令牌就可以,不需要携带参数
 		get_UserInfo(context){
 			getUserInfo().then(response => {
 				console.log(response)
@@ -66,6 +84,22 @@ export default {
 				localStorage.setItem('user_info',JSON.stringify(response.data.data))
 			})
 			
+		},
+		// 有令牌就可以,不需要携带参数
+		get_UserAddress(context){
+			getUserAddress().then(response => {
+				// 获取用户收获信息列表,赋值到仓库中
+				context.state.user_address = response.data.data
+				console.log(context.state.user_address)			
+			})
+		},
+		// 获取到所有行政地区列表
+		get_China(context){
+			getChina().then(response => {
+				// 获取行政地区列表,赋值到仓库中
+				context.state.city_list = response.data.data
+				console.log(context.state.city_list)			
+			})
 		}
 	}
 

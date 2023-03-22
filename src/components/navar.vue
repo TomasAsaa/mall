@@ -17,7 +17,7 @@
 				<router-link to="/vip" class="text-hover-red  px-2 border-right-dark text-decoration-none"
 					:class="{'text-red' : website.nav_index == 4, 'text-secondary' : website.nav_index != 4}"
 					@click="nav_clicked(4)">我的会员</router-link>
-				<router-link to="/address" class="text-hover-red  px-2 border-right-dark text-decoration-none"
+				<router-link to="/addresslist" class="text-hover-red  px-2 border-right-dark text-decoration-none"
 					:class="{'text-red' : website.nav_index == 5, 'text-secondary' : website.nav_index != 5}"
 					@click="nav_clicked(5)">收货信息</router-link>
 				<router-link to="/customer" class="text-hover-red  px-2 border-right-dark text-decoration-none"

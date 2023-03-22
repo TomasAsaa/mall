@@ -7,6 +7,7 @@ import attrlist from '@/components/attrlist.vue'
 import spuInfo from '@/components/spuInfo.vue'
 import register from '@/components/register.vue'
 import logon from '@/components/logon.vue'
+import addresslist from '@/components/addresslist.vue'
 
 const routes = [{
 		path: '/',
@@ -32,6 +33,11 @@ const routes = [{
 		path: '/logon',
 		name: 'logon',
 		component: logon
+	},
+	{
+		path: '/addresslist',
+		name: 'addresslist',
+		component: addresslist
 	}
 ]
 
