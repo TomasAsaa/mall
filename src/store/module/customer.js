@@ -3,7 +3,8 @@ import {
 	login,
 	getUserInfo,
 	getUserAddress,
-	getChina
+	getChina,
+	addUserAddress
 } from '@/data/customer.js'
 
 import router from '@/router'
@@ -100,7 +101,28 @@ export default {
 				context.state.city_list = response.data.data
 				console.log(context.state.city_list)			
 			})
-		}
+		},
+		// 新增用户收获信息
+		add_UserAddress(context){			
+			addUserAddress({
+				uaddr_name : context.state.uaddr_name,
+				uaddr_phone : context.state.uaddr_phone,
+				uaddr_province : context.state.uaddr_province.name,
+				uaddr_city : context.state.uaddr_city.name,
+				uaddr_district : context.state.uaddr_district == '' ? '' : context.state.uaddr_district.name,
+				uaddr_address : context.state.uaddr_address,
+				uaddr_isdefault : context.state.uaddr_isdefault
+			}).then(response => {				
+				if(response.data.httpcode == 200){
+					alert('保存成功')
+					// 让保存成功的数据直接显示出来
+					context.state.user_address.push(response.data.data)
+					
+				}						
+			})
+			
+			
+		},
 	}
 
 }

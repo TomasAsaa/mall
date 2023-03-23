@@ -1,9 +1,9 @@
 <template>	
-	<div class="w-45 rounded box-shadow d-flex align-items-center justify-content-center hand" style="min-height: 200px;"
+	<div class="w-45 box-shadow d-flex align-items-center justify-content-center hand rounded-lg mb-3" style="min-height: 200px;"
 	v-show="!edit" @click="add_click(true)">
 		<span class="text-max text-bolder">+</span>
 	</div>
-	<div class="w-45 p-4 box-shadow border-box rounded-lg mx-4 d-flex flex-column justify-content-between"
+	<div class="w-45 p-4 box-shadow border-box rounded-lg mx-4 d-flex flex-column justify-content-between" style="margin: 0%;"
 	v-show="edit">
 		<input type="text" placeholder="请输入收货人姓名" class="rounded border-gray outline-none py-1 px-3 mt-3"
 		v-model="customer.uaddr_name">
@@ -30,7 +30,8 @@
 		<input type="text" placeholder="请输入收货人详细地址" class="rounded border-gray outline-none py-1 px-3 mt-3"
 		v-model="customer.uaddr_address">
 		<div class="d-flex justify-content-end mt-3">
-			<button class="mx-3 border-0 text-white py-2 px-5 rounded bg-green">保存</button>
+			<button class="mx-3 border-0 text-white py-2 px-5 rounded bg-green hand"
+			@click="add_UserAddress(),add_click(false)">保存</button>
 			<button class="mx-3 border-0 text-white py-2 px-5 rounded bg-red hand"
 			@click="add_click(false)">取消</button>
 		</div>
@@ -40,7 +41,7 @@
 </template>
 
 <script>
-	import {mapState,mapMutations} from 'vuex'
+	import {mapState,mapMutations,mapActions} from 'vuex'
 	
 	export default{
 		data(){
@@ -54,6 +55,9 @@
 			},
 			...mapMutations({
 				'uaddr_provincechange' : 'customer/uaddr_provincechange'
+			}),
+			...mapActions({
+				'add_UserAddress' : 'customer/add_UserAddress'
 			})			
 		},
 		computed: {

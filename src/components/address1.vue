@@ -1,5 +1,5 @@
 <template>
-	<div class="w-45 box-shadow p-4 border-box rounded-lg" v-show="true">
+	<div class="w-45 box-shadow p-4 border-box rounded-lg mb-3" v-show="true">
 		<div class="d-flex text-bold text-secondary">
 			<div>张三</div>
 			<div class="ml-3 mr-auto">上海市</div>
