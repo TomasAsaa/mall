@@ -1,6 +1,6 @@
 <template>
 	<div class="container d-flex justify-content-between mt-3 flex-wrap">
-		<address1 v-for="addr of customer.user_address" :key="'userAddr' + addr.uaddr_id"></address1>
+		<address1 v-for="addr of customer.user_address" :key="'userAddr' + addr.uaddr_id" :data='addr'></address1>
 		<address2></address2>
 	</div>
 </template>

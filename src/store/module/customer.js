@@ -4,7 +4,8 @@ import {
 	getUserInfo,
 	getUserAddress,
 	getChina,
-	addUserAddress
+	addUserAddress,
+	updateUserAddress
 } from '@/data/customer.js'
 
 import router from '@/router'
@@ -20,7 +21,7 @@ export default {
 		password : '',
 		// 用户信息
 		user_info : undefined,
-		// 用户收货地址
+		// 用户收货信息
 		user_address : [],
 		// 收获列表信息
 		uaddr_name : '',
@@ -31,14 +32,46 @@ export default {
 		uaddr_address : '',
 		uaddr_isdefault : 0,
 		// 行政地区列表
-		city_list : []
+		city_list : [],
+		// 编辑状态的收货地址
+		edit_address : undefined
 	},
 	mutations: {
+		// 上级行政地区改变,下级置空
 		uaddr_provincechange(context){
 			context.uaddr_city = '',
 			context.uaddr_district = ''
+		},
+		// 收获信息面板点击编辑按钮
+		editaddress_click(context,payload){
+			context.edit_address = payload
+			console.log(context.edit_address)
+			context.uaddr_name = payload.uaddr_name
+			context.uaddr_phone = payload.uaddr_phone			
+			context.uaddr_address = payload.uaddr_address
+			
+			for(let first of context.city_list){
+				if(first.name == payload.uaddr_province){
+					context.uaddr_province = first
+					break
+				}
+			}
+			for(let second of context.uaddr_province.children){
+				if(second.name == payload.uaddr_city){
+					context.uaddr_city = second
+					break
+				}
+			}
+			for(let third of context.uaddr_city.children){
+				if(third.name == payload.uaddr_district){
+					context.uaddr_district = third
+					break
+				}
+			}
+			
+			
 		}
-	},
+	},		
 	actions: {
 		register(context){
 			if(context.user_password == context.repeat_password){
@@ -121,6 +154,43 @@ export default {
 				}						
 			})
 			
+			
+		},
+		// 保存修改的收货地址
+		update_UserAddress(context){
+			updateUserAddress({
+				uaddr_name : context.state.uaddr_name,
+				uaddr_phone : context.state.uaddr_phone,
+				uaddr_province : context.state.uaddr_province.name,
+				uaddr_city : context.state.uaddr_city.name,
+				uaddr_district : context.state.uaddr_district == '' ? '' : context.state.uaddr_district.name,
+				uaddr_address : context.state.uaddr_address,
+				uaddr_isdefault : context.state.uaddr_isdefault,
+				uaddr_id : context.state.edit_address.uaddr_id
+			}).then(response => {				
+				if(response.data.httpcode == 200){
+					alert('修改成功')
+					// 更新仓库用户收货信息
+					for(let i=0; i<=context.state.user_address.length-1; i++){
+						if(context.state.user_address[i].uaddr_id == context.state.edit_address.uaddr_id){
+							context.state.user_address[i].uaddr_name = context.state.uaddr_name
+							context.state.user_address[i].uaddr_phone = context.state.uaddr_phone
+							context.state.user_address[i].uaddr_province = context.state.uaddr_province.name
+							context.state.user_address[i].uaddr_city = context.state.uaddr_city.name
+							context.state.user_address[i].uaddr_district = context.state.uaddr_district.name
+							context.state.user_address[i].uaddr_address = context.state.uaddr_address
+						}
+					}
+					
+					context.state.edit_address = undefined
+					
+					
+										
+				}
+				
+				
+								
+			})
 			
 		},
 	}
